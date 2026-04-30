@@ -1,8 +1,8 @@
-const express = require('express');
-const ExcelJS = require('exceljs');
-const db = require('./database');
+//const express = require('express');
+//const ExcelJS = require('exceljs');
+//const db = require('./database');
 
-const router = express.Router();
+// const router = express.Router();
 
 // Listar produtos
 router.get('/produtos', (req, res) => {
@@ -69,4 +69,4 @@ router.delete('/produtos/:id', (req, res) => {
         res.json({ mensagem: "Produto excluído com sucesso" });
     });
 });
-module.exports = router;
+// module.exports = router;
