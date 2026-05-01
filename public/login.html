@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,34 +10,37 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body class="auth-page">
 
-<div class="card-auth">
-  <a href="#" class="brand-logo text-primary">
-    <i class="bi bi-box-seam me-2"></i> EstoquePro
-  </a>
-  <div class="text-center mb-4">
-    <h4 class="fw-bold mb-1">Bem-vindo</h4>
-    <p class="text-muted small">Gerencie seu estoque com eficiência</p>
-  </div>
-  <form method="POST" action="/login">
-    <div class="mb-3">
-      <label class="form-label small fw-bold text-uppercase">Usuário</label>
-      <input type="text" name="username" class="form-control" placeholder="Seu nome de usuário" required>
-    </div>
-    <div class="mb-4">
-      <label class="form-label small fw-bold text-uppercase">Senha</label>
-      <input type="password" name="password" class="form-control" placeholder="••••••••" required>
-    </div>
-    <button type="submit" class="btn btn-primary w-100 py-2 fw-bold shadow-sm">Entrar</button>
-  </form>
-  <div class="text-center mt-4">
-    <a href="/register.html" class="text-decoration-none small">
-      Não tem conta? <span class="text-primary fw-bold">Criar agora</span>
+  <div class="card-auth">
+    <a href="#" class="brand-logo text-primary">
+      <i class="bi bi-box-seam me-2"></i> EstoquePro
     </a>
+    <div class="text-center mb-4">
+      <h4 class="fw-bold mb-1">Bem-vindo</h4>
+      <p class="text-muted small">Gerencie seu estoque com eficiência</p>
+    </div>
+    <form method="POST" action="/login">
+      <div class="mb-3">
+        <label class="form-label small fw-bold text-uppercase">Usuário</label>
+        <input type="text" name="username" class="form-control" placeholder="Seu nome de usuário" required>
+      </div>
+      <div class="mb-4">
+        <label class="form-label small fw-bold text-uppercase">Senha</label>
+        <input type="password" name="password" class="form-control" placeholder="Sua senha" required>
+      </div>
+      <button type="submit" class="btn btn-primary w-100 py-2 fw-bold shadow-sm">Entrar</button>
+    </form>
+    <div class="text-center mt-4">
+      <a href="/register.html" class="text-decoration-none small">
+        Não tem conta? <span class="text-primary fw-bold">Criar agora</span>
+      </a>
+    </div>
   </div>
-</div>
 
-<script src="acessibilidade.js"></script>
+  <script src="acessibilidade.js"></script>
+  <script src="screenreader.js"></script>
 </body>
+
 </html>
