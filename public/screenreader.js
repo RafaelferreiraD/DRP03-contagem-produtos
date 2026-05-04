@@ -8,7 +8,8 @@ class ScreenReaderNavigator {
 
         // controla se é o primeiro toque daquela página
         this.isFirstKeystroke = true;
-        this.apibaseurl = "http://localhost:8000";
+        // this.apibaseurl = "http://localhost:8000";
+        this.apibaseurl = "https://appat.rlabs.dev.br";
 
         this.init();
     }
