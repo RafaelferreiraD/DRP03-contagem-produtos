@@ -29,7 +29,8 @@
             title="Diminuir texto">A-</button>
           <button class="btn btn-sm btn-light text-primary fw-bold IgnoreReader" onclick="mudarFonte(1)"
             title="Aumentar texto">A+</button>
-          <button class="btn btn-sm btn-light text-primary ms-1 IgnoreReader" onclick="toggleTema()" title="Alternar Tema">
+          <button class="btn btn-sm btn-light text-primary ms-1 IgnoreReader" onclick="toggleTema()"
+            title="Alternar Tema">
             <i id="icone-tema" class="bi bi-moon-stars"></i>
           </button>
         </div>
@@ -91,6 +92,14 @@
   <script src="screenreader.js"></script>
 
   <script>
+
+    // Verificar Login
+    fetch("/api/analytics/resumo").then((res) => {
+      if (res.redirected || res.status === 401) {
+        window.location.href = "/login.html";
+      }
+    });
+
     // Gerenciamento de Gráficos
     let graficosAtivos = [];
 
