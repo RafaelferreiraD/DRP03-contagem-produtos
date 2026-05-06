@@ -62,46 +62,59 @@ class ScreenReaderNavigator {
     }
 
     handleKeyDown(event) {
-        const navigationKeys = ['ArrowDown', 'ArrowRight', 'ArrowUp', 'ArrowLeft', 'Enter', 'h', 'H'];
+        const currentElement = this.currentIndex >= 0 && this.currentIndex < this.readableElements.length
+            ? this.readableElements[this.currentIndex]
+            : null;
 
+        // Verifica se o usuário clicou nativamente em um input usando o mouse
+        const isNativeInputActive = document.activeElement && ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName);
+
+        // --- 1. MODO DE EDIÇÃO E DIGITAÇÃO LIVRE ---
+        // Se o leitor ativou o modo de edição OU o cursor está em um input, liberamos as teclas.
+        if (this.isEditMode || isNativeInputActive) {
+            if (event.key === 'Escape') {
+                event.preventDefault();
+                this.isEditMode = false;
+
+                // Remove o foco do elemento para voltar à navegação do site
+                if (currentElement) currentElement.blur();
+                else document.activeElement.blur();
+
+                this.sendToAudioAPI("Modo de navegação. Edição concluída.");
+            }
+            return; // Sai da função imediatamente. Isso permite que a letra "H" seja digitada no input!
+        }
+
+        // --- 2. PROTEÇÃO DE SOBREPOSIÇÃO DE ÁUDIO ---
+        // Só bloqueia os comandos de navegação se o áudio estiver tocando (e não estivermos digitando)
+        const navigationKeys = ['ArrowDown', 'ArrowRight', 'ArrowUp', 'ArrowLeft', 'Enter', 'h', 'H'];
         if (this.isPlayingAudio && navigationKeys.includes(event.key)) {
             event.preventDefault();
             return;
         }
 
-        const currentElement = this.currentIndex >= 0 && this.currentIndex < this.readableElements.length
-            ? this.readableElements[this.currentIndex]
-            : null;
+        // --- 3. COMANDOS GLOBAIS DO LEITOR ---
 
-        if (this.isEditMode) {
-            if (event.key === 'Escape') {
-                event.preventDefault();
-                this.isEditMode = false;
-                if (currentElement) currentElement.blur();
-                this.sendToAudioAPI("Modo de navegação. Edição concluída.");
-            }
-            return;
-        }
-
-        if (event.key === 'h' || event.key === 'H') {
+        // Botão de Ajuda (Só funciona se NÃO for o primeiro toque da página)
+        if ((event.key === 'h' || event.key === 'H') && !this.isFirstKeystroke) {
             event.preventDefault();
             this.sendToAudioAPI("Ajuda do sistema: Use as setas para cima ou para baixo para navegar entre os elementos. Pressione enter para editar campos ou acionar botões. Pressione Esc para sair do modo de edição. Pressione H para repetir esta mensagem.");
             return;
         }
+
+        // Setas Direcionais
         if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
             event.preventDefault();
-            // Se for a primeira interação, ele toca o áudio e encerra a função
             if (this.handleFirstInteraction()) return;
-
             this.navigate(1);
         }
         else if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
             event.preventDefault();
-            // Mesma trava aqui
             if (this.handleFirstInteraction()) return;
-
             this.navigate(-1);
         }
+
+        // Tecla Enter
         else if (event.key === 'Enter' && currentElement) {
             event.preventDefault();
 
